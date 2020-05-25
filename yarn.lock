@@ -2306,6 +2306,14 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha1-p3c2C1s5oaLlEG+OhY8v0tBgxXA=
 
+"@redwoodjs/internal@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@redwoodjs/internal/-/internal-0.7.0.tgz#c708878421f985c74bb947021add9dd965d7b04a"
+  integrity sha512-VnJk1IrbNhMFK+l1/gF3ScNBsx19+sVnuiKCNAGFJMIDQReaZSQC3FOux9IVgJJCN2AgMnp/X8q+Bz4TQ6gHvA==
+  dependencies:
+    findup-sync "^4.0.0"
+    toml "^3.0.0"
+
 "@rollup/plugin-commonjs@11.0.1":
   version "11.0.1"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-commonjs/-/plugin-commonjs-11.0.1.tgz#6056a6757286901cc6c1599123e6680a78cad6c2"
@@ -3963,6 +3971,15 @@ babel-plugin-dynamic-import-node@^2.3.3:
   integrity sha512-jZVI+s9Zg3IqA/kdi0i6UDCybUI3aSBLnglhYbSSjKlV7yF1F/5LWv8MakQmvYpnbJDS6fcBL2KzHSxNCMtWSQ==
   dependencies:
     object.assign "^4.1.0"
+
+babel-plugin-generator-prettier@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-generator-prettier/-/babel-plugin-generator-prettier-1.2.0.tgz#ec4a00c787f670bbf669228b5375bf9fcd3a5fac"
+  integrity sha512-FE/doiOxcLaw7f4ydNw/poNyxbNUiTmhc4LAx/KW3JKBYzMVsOuLk+oGbgdHJeIAl0B9QKIdCO/ZD4hpdsXV+Q==
+  dependencies:
+    has "^1.0.3"
+    prettier "^1.18.2"
+    source-map "^0.5.7"
 
 babel-plugin-graphql-tag@^2.5.0:
   version "2.5.0"
@@ -11433,6 +11450,11 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
+prettier@^1.18.2:
+  version "1.19.1"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.19.1.tgz#f7d7f5ff8a9cd872a7be4ca142095956a60797cb"
+  integrity sha512-s7PoyDv/II1ObgQunCbB9PdLmUcBZcnWOcxDh7O0N/UwDEsHyqkW+Qh28jW+mVuCdx7gLB0BotYI1Y6uI9iyew==
+
 prettier@^2.0.1, prettier@^2.0.2, prettier@^2.0.5:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.0.5.tgz#d6d56282455243f2f92cc1716692c08aa31522d4"
@@ -12803,7 +12825,7 @@ source-map-url@^0.4.0:
   resolved "https://registry.yarnpkg.com/source-map-url/-/source-map-url-0.4.0.tgz#3e935d7ddd73631b97659956d55128e87b5084a3"
   integrity sha1-PpNdfd1zYxuXZZlW1VEo6HtQhKM=
 
-source-map@^0.5.0, source-map@^0.5.6:
+source-map@^0.5.0, source-map@^0.5.6, source-map@^0.5.7:
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.7.tgz#8a039d2d1021d22d1ea14c80d8ea468ba2ef3fcc"
   integrity sha1-igOdLRAh0i0eoUyA2OpGi6LvP8w=

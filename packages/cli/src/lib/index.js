@@ -13,6 +13,7 @@ import execa from 'execa'
 import Listr from 'listr'
 import VerboseRenderer from 'listr-verbose-renderer'
 import { format } from 'prettier'
+import * as babel from '@babel/core'
 
 import c from './colors'
 
@@ -133,7 +134,8 @@ export const generateTemplate = (templateFilename, { name, root, ...rest }) => {
   const parser = {
     '.css': 'css',
     '.js': 'babel',
-  }[path.extname(templateFilename)]
+    '.ts': 'babel-ts',
+  }[path.extname(templateFilename.replace('.template', ''))]
 
   if (typeof parser === 'undefined') {
     return renderedTemplate
@@ -188,6 +190,19 @@ export const prettierOptions = () => {
   } catch (e) {
     return undefined
   }
+}
+
+// TODO(@jmreidy): Move this into `generateTemplate` when all templates have TS support
+/*
+ * Convert a generated TS template file into JS.
+ */
+export const transformTSToJS = (content) => {
+  const configOptions = prettierOptions()
+  content = babel.transform(content, {
+    plugins: ['@babel/plugin-transform-typescript', 'generator-prettier'],
+    generatorOpts: configOptions,
+  }).code
+  return content
 }
 
 /**
@@ -319,4 +334,14 @@ export const runCommandTask = async (commands, { verbose }) => {
     console.log(c.error(e.message))
     return false
   }
+}
+
+/*
+ * Extract default CLI args from an exported builder
+ */
+export const getDefaultArgs = (builder) => {
+  return Object.entries(builder).reduce((agg, [k, v]) => {
+    agg[k] = v.default
+    return agg
+  }, {})
 }
