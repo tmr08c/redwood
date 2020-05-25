@@ -15,7 +15,7 @@ import { files } from '../../../generate/service/service'
 import { tasks } from '../service'
 
 beforeEach(async () => {
-  fs.__setMockFiles(await files({ name: 'User' }))
+  fs.__setMockFiles(await files({ name: 'User' }, { makeTemplate: false }))
 })
 
 afterEach(() => {
@@ -29,7 +29,9 @@ test('destroys service files', async () => {
   t.setRenderer('silent')
 
   return t.run().then(async () => {
-    const generatedFiles = Object.keys(await files({ name: 'User' }))
+    const generatedFiles = Object.keys(
+      await files({ name: 'User' }, { makeTemplate: false })
+    )
     expect(generatedFiles.length).toEqual(unlinkSpy.mock.calls.length)
     generatedFiles.forEach((f) => expect(unlinkSpy).toHaveBeenCalledWith(f))
   })

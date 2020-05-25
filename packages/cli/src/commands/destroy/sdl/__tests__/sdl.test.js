@@ -18,7 +18,7 @@ import { files } from '../../../generate/sdl/sdl'
 import { tasks } from '../sdl'
 
 beforeEach(async () => {
-  fs.__setMockFiles(await files({ name: 'Post' }))
+  fs.__setMockFiles(await files({ name: 'Post' }, { makeTemplate: false }))
 })
 
 afterEach(() => {
@@ -32,7 +32,9 @@ test('destroys sdl files', async () => {
   t.setRenderer('silent')
 
   return t._tasks[0].run().then(async () => {
-    const generatedFiles = Object.keys(await files({ name: 'Post' }))
+    const generatedFiles = Object.keys(
+      await files({ name: 'Post' }, { makeTemplate: false })
+    )
     expect(generatedFiles.length).toEqual(unlinkSpy.mock.calls.length)
     generatedFiles.forEach((f) => expect(unlinkSpy).toHaveBeenCalledWith(f))
   })

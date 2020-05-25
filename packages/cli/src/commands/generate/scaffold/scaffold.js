@@ -53,8 +53,8 @@ const getIdType = (model) => {
 export const files = async ({
   model: name,
   path: scaffoldPath = '',
-  typescript,
-  javascript,
+  typescript = false,
+  javascript = true,
 }) => {
   const model = await getSchema(pascalcase(pluralize.singular(name)))
 
@@ -335,35 +335,19 @@ export const command = 'scaffold <model>'
 export const desc =
   'Generate Pages, SDL, and Services files based on a given DB schema Model. Also accepts <path/model>.'
 
-// TODO: These won't work because we rely on the JSON structure to determine the default args for the files.
-export const builder = (yargs) => {
-  yargs.positional('model', {
-    description:
-      "Model to scaffold. You can also use <path/model> to nest files by type at the given path directory (or directories). For example, 'rw g scaffold admin/post'.",
-  })
-  yargs.option('force', {
-    default: false,
-    type: 'boolean',
-  })
-  yargs.option('typescript', {
-    type: 'boolean',
-    default: false,
-    desc: 'Generate TypeScript files',
-  })
-  yargs.option('javascript', {
-    type: 'boolean',
-    default: true,
-    desc: 'Generate JavaScript files',
-  })
+export const builder = {
+  force: { type: 'boolean', default: false },
+  javascript: { type: 'boolean', default: true },
+  typescript: { type: 'boolean', default: false },
 }
 
-const tasks = ({ model, path, force }) => {
+const tasks = ({ model, path, force, javascript, typescript }) => {
   return new Listr(
     [
       {
         title: 'Generating scaffold files...',
         task: async () => {
-          const f = await files({ model, path })
+          const f = await files({ model, path, javascript, typescript })
           return writeFilesTask(f, { overwriteExisting: force })
         },
       },

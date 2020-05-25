@@ -106,7 +106,10 @@ const sdlFromSchemaModel = async (name) => {
   }
 }
 
-export const files = async ({ name, crud, typescript, javascript }) => {
+export const files = async (
+  { name, crud, javascript = true, typescript = false },
+  { makeTemplate = true } = {}
+) => {
   const {
     query,
     createInput,
@@ -116,18 +119,25 @@ export const files = async ({ name, crud, typescript, javascript }) => {
     enums,
   } = await sdlFromSchemaModel(pascalcase(pluralize.singular(name)))
 
-  let template = generateTemplate(
-    path.join('sdl', 'templates', `sdl.ts.template`),
-    {
-      name,
-      crud,
-      query,
-      createInput,
-      updateInput,
-      idType,
-      enums,
+  let template = ''
+  if (makeTemplate) {
+    template = generateTemplate(
+      path.join('sdl', 'templates', `sdl.ts.template`),
+      {
+        name,
+        crud,
+        query,
+        createInput,
+        updateInput,
+        idType,
+        enums,
+      }
+    )
+
+    if (typescript === false) {
+      template = transformTSToJS(template)
     }
-  )
+  }
 
   const extension = typescript ? 'ts' : 'js'
   let outputPath = path.join(
@@ -135,13 +145,12 @@ export const files = async ({ name, crud, typescript, javascript }) => {
     `${camelcase(pluralize(name))}.sdl.${extension}`
   )
 
-  if (javascript && !typescript) {
-    template = transformTSToJS(template)
-  }
-
   return {
     [outputPath]: template,
-    ...(await serviceFiles({ name, crud, relations, typescript, javascript })),
+    ...(await serviceFiles(
+      { name, crud, relations, typescript, javascript },
+      { makeTemplate }
+    )),
   }
 }
 
