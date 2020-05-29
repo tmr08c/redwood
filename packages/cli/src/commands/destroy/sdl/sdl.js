@@ -1,5 +1,4 @@
 import Listr from 'listr'
-
 import { deleteFilesTask } from 'src/lib'
 import c from 'src/lib/colors'
 
