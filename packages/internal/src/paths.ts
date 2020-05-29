@@ -56,6 +56,8 @@ const PATH_WEB_DIR_SRC = 'web/src'
 const PATH_WEB_DIR_CONFIG = 'web/config'
 const PATH_WEB_DIR_CONFIG_WEBPACK = 'web/config/webpack.config.js'
 
+export type { Paths } from './types'
+
 /**
  * Search the parent directories for the Redwood configuration file.
  */
